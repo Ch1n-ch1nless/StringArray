@@ -23,4 +23,7 @@ int main()
         }
         printf("\n");
     }
+
+    free(text2);
+    return 0;
 }
