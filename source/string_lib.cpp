@@ -27,3 +27,25 @@ void ReadNumbers(FILE* file_ptr, size_t* ROWS, size_t* COLS)
     fscanf(file_ptr, "%d", COLS);
     ClearBuf(file_ptr);
 }
+
+void ReadArray(FILE* file_ptr, char* data[], const size_t size, char* buffer)
+{
+    for (size_t i = 0; i < size; i++) {
+        fgets(buffer, MAXSIZE, file_ptr);
+        char* str = (char*) calloc(strlen(buffer), sizeof(char));
+        if (str != nullptr) {
+            strncpy(str, buffer, strlen(buffer));
+        } else {
+            printf("ERROR!!! Str is nullptr!");
+            assert(false);
+        }
+        data[i] = str;
+    }
+}
+
+void PrintArray(char* data[], const size_t size)
+{
+    for (size_t i = 0; i < size; i++) {
+        printf("%s", data[i]);
+    }
+}

@@ -2,28 +2,16 @@
 
 int main()
 {
-    size_t ROWS = 0;
-    size_t COLS = 0;
+    const size_t size = 7;
+
     FILE* file_ptr = fopen("array.txt", "r");
 
-    ReadNumbers(file_ptr, &ROWS, &COLS);
+    char* data[size] = {};
 
-    char* text2 = (char*) calloc(ROWS * COLS, sizeof(char));
+    char buffer[MAXSIZE] = {};
 
-    for (size_t i = 0; i < ROWS; i++) {
-        for (size_t j = 0; j < COLS; j++) {
-            fscanf(file_ptr, "%c", GetElem(text2, i, j, COLS));
-        }
-        ClearBuf(file_ptr);
-    }
+    ReadArray(file_ptr, data, size, buffer);
 
-    for (size_t i = 0; i < ROWS; i++) {
-        for (size_t j = 0; j < COLS; j++) {
-            printf("%c[%d][%d] ", *GetElem(text2, i, j, COLS), i, j);
-        }
-        printf("\n");
-    }
-
-    free(text2);
+    PrintArray(data, size);
     return 0;
 }
