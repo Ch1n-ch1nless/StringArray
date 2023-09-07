@@ -28,24 +28,35 @@ void ReadNumbers(FILE* file_ptr, size_t* ROWS, size_t* COLS)
     ClearBuf(file_ptr);
 }
 
-void ReadArray(FILE* file_ptr, char* data[], const size_t size, char* buffer)
+void ReadNumber(FILE* file_ptr, size_t* numbers_of_strings)
 {
-    for (size_t i = 0; i < size; i++) {
+    assert(file_ptr != nullptr);
+    fscanf(file_ptr, "%d", numbers_of_strings);
+    ClearBuf(file_ptr);
+}
+
+void ReadArray(FILE* file_ptr, char** data, const size_t number_of_strings)
+{
+    char buffer[MAXSIZE] = {};
+    for (size_t i = 0; i < number_of_strings; i++) {
         fgets(buffer, MAXSIZE, file_ptr);
-        char* str = (char*) calloc(strlen(buffer), sizeof(char));
-        if (str != nullptr) {
-            strncpy(str, buffer, strlen(buffer));
-        } else {
-            printf("ERROR!!! Str is nullptr!");
-            assert(false);
-        }
-        data[i] = str;
+        *(data + i) = strdup(buffer);
     }
 }
 
-void PrintArray(char* data[], const size_t size)
+void PrintArray(char** data, const size_t numbers_of_strings)
 {
-    for (size_t i = 0; i < size; i++) {
-        printf("%s", data[i]);
+    assert(data != nullptr);
+    for (size_t i = 0; i < numbers_of_strings; i++) {
+        printf("%s", *(data + i));
     }
+}
+
+void ClearArray(char** data, const size_t numbers_of_strings)
+{
+    assert(data != nullptr);
+    for (size_t i = 0; i < numbers_of_strings; i++) {
+        free(*(data + i));
+    }
+    free(data);
 }
